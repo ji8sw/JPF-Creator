@@ -1,0 +1,35 @@
+﻿<Window x:Class="JPF_Creator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JPF_Creator"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="200">
+    <Grid>
+        <!-- Define the columns and rows of the grid -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <!-- Left column for buttons -->
+            <ColumnDefinition Width="*"/>
+            <!-- Right column for other content -->
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <!-- Top part for buttons -->
+            <RowDefinition Height="Auto"/>
+            <!-- Bottom part for the two buttons -->
+        </Grid.RowDefinitions>
+
+        <!-- List of buttons on the left -->
+        <ListBox Grid.Row="0" Grid.Column="0" x:Name="FileButtonList"
+        VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+
+        <!-- Two buttons on the bottom-right -->
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Content="Add Files" Margin="5" Click="BeginSelectingFiles" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Button Content="Clear Files" Margin="5" Click="ClearSelectedFiles" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Button Content="Compile" Margin="5" Click="CompileJPF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        </StackPanel>
+    </Grid>
+</Window>
