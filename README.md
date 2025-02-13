@@ -14,9 +14,16 @@ After the magic header, the first few bytes will be:
 - [FILE_LENGTH] bytes for file data
 - next file...
 
+## C++ JPF Reader
+
+A C++ program has been developed which can easily read JPF files that are created by this application
+It is very easy to implement in your own projects.
+
+[View Source Code](https://github.com/ji8sw/JPF-Reader)
+
 ## To-Do
 - [ ] Add optional file compression
 - [ ] Add optional file encryption
 - [ ] Click selected files to view more info or remove specific files
 - [ ] Beautify Interface
-- [ ] C++ JPF Reader
+- [x] C++ JPF Reader

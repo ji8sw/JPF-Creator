@@ -38,8 +38,6 @@ namespace JPF_Creator
 
             if (FileDialog.ShowDialog() == true)
             {
-                SelectedFiles.Clear();
-
                 // begin loading all the selected files on seperate threads
                 foreach (string FilePath in FileDialog.FileNames)
                 {
@@ -56,7 +54,7 @@ namespace JPF_Creator
             SelectedFiles.Clear();
         }
 
-        public void SaveByteArrayToFile(byte[] Data)
+        public bool SaveByteArrayToFile(byte[] Data)
         {
             Stream DataStream;
             SaveFileDialog SaveJPFDialog = new SaveFileDialog();
@@ -69,8 +67,11 @@ namespace JPF_Creator
                 {
                     DataStream.Write(Data, 0, Data.Length);
                     DataStream.Close();
+                    return true;
                 }
             }
+
+            return false;
         }
 
         private void CompileJPF(object Sender, RoutedEventArgs Event)
@@ -78,15 +79,15 @@ namespace JPF_Creator
             List<byte> JPFData = new List<byte>();
             JPFData.AddRange(Encoding.ASCII.GetBytes("JPF")); // Add "JPF" Magic Header
 
-            int TotalFiles = 1;
+            int TotalFiles = 0;
             foreach (FileData File in SelectedFiles)
             {
                 JPFData.AddRange(File.GetAsJPFData());
                 TotalFiles++;
             }
 
-            SaveByteArrayToFile(JPFData.ToArray());
-            MessageBox.Show($"Compiled {TotalFiles} assets into 1 JPF");
+            if (SaveByteArrayToFile(JPFData.ToArray()))
+                MessageBox.Show($"Compiled {TotalFiles}/{SelectedFiles.Count} assets into 1 JPF");
         }
 
         private void ViewSelectedFile(object Sender, RoutedEventArgs Event)
@@ -155,7 +156,7 @@ namespace JPF_Creator
         public byte[] GetAsJPFData()
         {
             Task.Run(() => LoadFileAsync()).Wait();
-
+            if (Data == null) return new byte[0];
             const int NameHashLength = 4; // 4 bytes to store the file name as a CityHash32
             const int FileTypeLength = 1; // 1 byte to store the file type
             const int FileSizeLength = 4; // 4 bytes to store the file size in bytes
