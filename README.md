@@ -3,6 +3,13 @@ JPF (Ji9sw Package File) is a custom file format made to store a bundle of files
 
 JPF is **not** something to be used by a user, and is instead made for game and engine developers to implement into their engines
 
+## How To Use
+To use the JPF Creator simply download the latest release (or build yourself), then run JPF Creator.exe
+
+You can then press Add Files to add game assets that you want in the JPF, then press Compile and save the JPF wherever.
+
+To use the JPF files read "C++ JPF Reader"
+
 ## JPF File Format
 
 JPF files can be identified using the first 3 bytes of a `.jpf` file, the first 3 bytes should always be a magic header reading `JPF`
