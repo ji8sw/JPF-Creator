@@ -10,8 +10,16 @@ namespace JPF_Creator
     enum FileType
     {
         PNG,
+        JPG,
         OBJ,
         TXT,
+        HLSL, // DirectX Shader code
+        VERT, // Vertex Shader Code
+        FRAG, // Fragment Shader Code
+        VERTC, // Vertex Shader (Compiled)
+        FRAGC, // Fragment Shader (Compiled)
+        FX, // Shader Effect Code
+        FXC, // Shader Effect (Compiled)
         // Add More
         UNK = 255
     }
@@ -176,11 +184,35 @@ namespace JPF_Creator
                 case ".png":
                     FileTypeData = FileType.PNG;
                     break;
+                case ".jpg":
+                    FileTypeData = FileType.JPG;
+                    break;
                 case ".obj":
                     FileTypeData = FileType.OBJ;
                     break;
                 case ".txt":
                     FileTypeData = FileType.TXT;
+                    break;
+                case ".hlsl":
+                    FileTypeData = FileType.HLSL;
+                    break;
+                case ".vert":
+                    FileTypeData = FileType.VERT;
+                    break;
+                case ".frag":
+                    FileTypeData = FileType.FRAG;
+                    break;
+                case ".vertc":
+                    FileTypeData = FileType.VERTC;
+                    break;
+                case ".fragc":
+                    FileTypeData = FileType.FRAGC;
+                    break;
+                case ".fx":
+                    FileTypeData = FileType.FX;
+                    break;
+                case ".fxc":
+                    FileTypeData = FileType.FXC;
                     break;
             }
             JPFData[TotalCopied] = (byte)FileTypeData;
