@@ -3,6 +3,8 @@ using System.Windows;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows.Controls;
+using System.Data.HashFunction.CityHash;
+using System.Data.HashFunction;
 
 namespace JPF_Creator
 {
@@ -165,16 +167,18 @@ namespace JPF_Creator
         {
             Task.Run(() => LoadFileAsync()).Wait();
             if (Data == null) return new byte[0];
-            const int NameHashLength = 4; // 4 bytes to store the file name as a CityHash32
+            const int NameHashLength = 8; // 8 bytes to store the file name as a CityHash64
             const int FileTypeLength = 1; // 1 byte to store the file type
             const int FileSizeLength = 4; // 4 bytes to store the file size in bytes
             byte[] JPFData = new byte[NameHashLength + FileTypeLength + FileSizeLength + Data.Length];
             int TotalCopied = 0;
 
-            string FileName = Path.GetFileNameWithoutExtension(FilePath);
-            int FileNameHash = FileName.GetHashCode();
-            byte[] FileNameHashData = BitConverter.GetBytes(FileNameHash);
-            Array.Copy(FileNameHashData, 0, JPFData, TotalCopied, FileNameHashData.Length); // Add File Name Hash
+            string FileName = Path.GetFileName(FilePath);
+
+            CityHashConfig CityHashConfig = new CityHashConfig();
+            CityHashConfig.HashSizeInBits = 64;
+            byte[] FileNameHashData = CityHashFactory.Instance.Create(CityHashConfig).ComputeHash(FileName).Hash;
+            Array.Copy(FileNameHashData, 0, JPFData, TotalCopied, NameHashLength); // Add File Name Hash
             TotalCopied += NameHashLength;
 
             FileType FileTypeData = FileType.UNK;
