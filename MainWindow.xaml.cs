@@ -9,11 +9,12 @@ using System.Data.HashFunction;
 namespace JPF_Creator
 {
     // Must be 0-255 to fit inside of a single byte
-    enum FileType
+    enum FileType : byte
     {
         PNG,
-        JPG,
-        OBJ,
+        JPG, // Or, JPEG
+        OBJ, // Wavefront OBJ model file
+        FBX, // Filmbox model file
         TXT,
         HLSL, // DirectX Shader code
         VERT, // Vertex Shader Code
@@ -22,6 +23,10 @@ namespace JPF_Creator
         FRAGC, // Fragment Shader (Compiled)
         FX, // Shader Effect Code
         FXC, // Shader Effect (Compiled)
+        EXE, // Executable (Compiled)
+        DLL, // Dynamic-linky library (Compiled)
+        JSON, // JavaScript Object Notation (Raw text, Formatted)
+        JPF, // Ji9sw Package File (Compiled)
         // Add More
         UNK = 255
     }
@@ -48,7 +53,6 @@ namespace JPF_Creator
 
             if (FileDialog.ShowDialog() == true)
             {
-                // begin loading all the selected files on seperate threads
                 foreach (string FilePath in FileDialog.FileNames)
                 {
                     FileData Info = new FileData(FilePath);
@@ -189,10 +193,14 @@ namespace JPF_Creator
                     FileTypeData = FileType.PNG;
                     break;
                 case ".jpg":
+                case ".jpeg":
                     FileTypeData = FileType.JPG;
                     break;
                 case ".obj":
                     FileTypeData = FileType.OBJ;
+                    break;
+                case ".fbx":
+                    FileTypeData = FileType.FBX;
                     break;
                 case ".txt":
                     FileTypeData = FileType.TXT;
@@ -217,6 +225,18 @@ namespace JPF_Creator
                     break;
                 case ".fxc":
                     FileTypeData = FileType.FXC;
+                    break;
+                case ".exe":
+                    FileTypeData = FileType.EXE;
+                    break;
+                case ".dll":
+                    FileTypeData = FileType.DLL;
+                    break;
+                case ".json":
+                    FileTypeData = FileType.JSON;
+                    break;
+                case ".jpf":
+                    FileTypeData = FileType.JPF;
                     break;
             }
             JPFData[TotalCopied] = (byte)FileTypeData;
